@@ -4,6 +4,7 @@ import { ENV } from "./config/env";
 import { clerkMiddleware } from '@clerk/express'
 
 const app = express();
+
 app.use(cors({origin: ENV.FRONTEND_URL}))
 app.use(clerkMiddleware());// auth obj will by attached to the req 
 app.use(express.json()); // parses json request bodies
@@ -13,7 +14,7 @@ app.use(express.urlencoded({ extended: true})) //parses from data (link html for
 
 app.get('/', (req,res) => { 
 
-    res.json({ message: "welcome to productfy api - powerd by postgrsql, Drizzle orm, Clerk Auth",
+    res.json({ message: "welcome to productfy api - powered by postgrsql, Drizzle orm, Clerk Auth",
 
         endpoints: {
             users: "/api/users",
