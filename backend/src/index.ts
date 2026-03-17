@@ -1,7 +1,10 @@
 import express from "express";
 import cors from "cors";
 import { ENV } from "./config/env";
-import { clerkMiddleware } from '@clerk/express'
+import { clerkMiddleware } from '@clerk/express';
+import usersRoutes from "./routes/userRoutes";
+import productsRoutes from "./routes/productsRoutes";
+import commentsRoutes from "./routes/commentsRoutes";
 
 const app = express();
 
@@ -23,7 +26,11 @@ app.get('/', (req,res) => {
         }
 
      })
-} )
+} );
+
+app.use('/api/users',usersRoutes)
+app.use('/api/products',productsRoutes)
+app.use('/api/comments',commentsRoutes)
 
 
 

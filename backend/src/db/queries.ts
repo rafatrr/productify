@@ -42,8 +42,11 @@ export const getAllProducts = async()=> {
     orderBy: (products, {desc}) => [desc(products.createdAt)]
     });
 } 
-export const getProductbyId = async(id:string)=> {
-    return db.query.products.findFirst({where: eq(products.id, id),
+
+
+export const getProductById  = async(id:string)=> {
+    return db.query.products.findFirst({ 
+        where: eq(products.id, id),
     with: {
         user:true,
         comments: {
@@ -51,6 +54,9 @@ export const getProductbyId = async(id:string)=> {
             orderBy: (comments, {desc}) => [desc(comments.createdAt)]
         } }})
 }
+
+
+
 export const getProductsByUserId = async(userId:string)=> {
     return db.query.products.findMany({
         where: eq(products.userId, userId),
@@ -63,7 +69,7 @@ export const getProductsByUserId = async(userId:string)=> {
 
 
 export const updateProduct = async(id:string, data:Partial<NewProduct>) => {
-    const existingProduct = await getProductbyId(id);
+    const existingProduct = await getProductById(id);
     if(!existingProduct) {
         throw new Error(`Product with id ${id}  not found`)
          }
@@ -74,7 +80,7 @@ export const updateProduct = async(id:string, data:Partial<NewProduct>) => {
 
 
 export const deleteProduct = async(id:string) => {
-    const existingProduct = await getProductbyId(id)
+    const existingProduct = await getProductById(id)
     if(!existingProduct){
         throw new Error(`Product with id ${id} not found`)
     }
