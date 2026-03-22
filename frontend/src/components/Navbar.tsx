@@ -1,6 +1,6 @@
 import React from 'react'
 import { SignInButton, SignUpButton, UserButton, SignedIn, SignedOut, useAuth } from '@clerk/clerk-react'
-import { ShoppingCart ,ShoppingBag, PlusIcon , UserIcon } from 'lucide-react'
+import { ShoppingCart ,ShoppingBag, PlusIcon , UserIcon } from 'lucide-react';
 import { Link } from 'react-router';
 import ThemeSelector from './ThemeSelector';
 
