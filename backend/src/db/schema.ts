@@ -8,7 +8,7 @@ export const users = pgTable("users", {
     name: text("name").notNull(),
     imageUrl: text("imag_url"),
     createdAt: timestamp("created_at",{ mode: "date"}).notNull().defaultNow(),
-    updetedAt: timestamp("updeted_at",{ mode: "date"})
+    updatedAt: timestamp("updated_at",{ mode: "date"})
     .notNull().defaultNow().$onUpdate(() => new Date()),
 })
 

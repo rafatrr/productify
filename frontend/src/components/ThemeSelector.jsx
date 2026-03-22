@@ -30,7 +30,7 @@ const ThemeSelector = () => {
          <PaletteIcon /> 
          <span className='hidden sm:inline'>Theme </span> 
       </div>
-      <ui   tabIndex={0}
+      <ul   tabIndex={0}
         className="dropdown-content menu bg-base-200 rounded-box z-50 w-56 p-2 shadow-xl max-h-30 overflow-y-auto flex-nowrap mt-40 ">
       {
         THEMES.map((themeItems) => (
@@ -42,7 +42,7 @@ const ThemeSelector = () => {
           </li>
         ))
       }
-        </ui>
+        </ul>
 
 
 

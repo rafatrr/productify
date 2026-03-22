@@ -8,7 +8,8 @@ import commentsRoutes from "./routes/commentsRoutes";
 
 const app = express();
 
-app.use(cors({origin: ENV.FRONTEND_URL}))
+app.use(cors({origin: ENV.FRONTEND_URL, credentials: true}));
+//'credentials: true' allows the frontend to send cookies to the backend so thatt we can authenticate the user
 app.use(clerkMiddleware());// auth obj will by attached to the req 
 app.use(express.json()); // parses json request bodies
 app.use(express.urlencoded({ extended: true})) //parses from data (link html forms )
