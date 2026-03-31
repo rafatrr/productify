@@ -35,6 +35,7 @@ const HomePage = () => {
             </p>
             <SignInButton mode="modal" >
               <button className="btn btn-primary">
+                
                 <SparklesIcon className="size-4" />
                 Start Selling
               </button>
