@@ -41,3 +41,17 @@ export const deleteComment = async ({ commentId }) => {
   const { data } = await api.delete(`/comments/${commentId}`);
   return data;
 };
+
+export const uploadImage = async (file) => {
+  const formData = new FormData();
+  formData.append("image", file);
+  const { data } = await api.post("/upload", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return data;
+};
+
+export const updatePhoneNumber = async (phoneNumber) => {
+  const { data } = await api.put("/users/phone", { phoneNumber });
+  return data;
+};

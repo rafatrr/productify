@@ -101,6 +101,16 @@ const ProductPage = () => {
                     <p className="font-semibold">{product.user.name}</p>
                     <p className="text-xs text-base-content/50">Creator</p>
                   </div>
+                      {product.user?.phoneNumber && !isOwner && (
+                      <a
+                        href={`https://wa.me/${product.user.phoneNumber}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn bg-green-500 text-white w-48 gap-2 mt-2"
+                      >
+                       Contact on WhatsApp
+                      </a>
+                    )}            
                 </div>
               </>
             )}
@@ -117,7 +127,4 @@ const ProductPage = () => {
     </div>
   )
 }
-
-
-
 export default ProductPage;

@@ -2,17 +2,12 @@
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { syncUser } from "../lib/api";
+import { syncUser, updatePhoneNumber } from "../lib/api";
+import { useQueryClient } from "@tanstack/react-query";
 
 function useUserSync() {
   const { isSignedIn } = useAuth();
   const { user } = useUser();
-  // user = {
-  //   id: "user_...",
-  //   primaryEmailAddress: { emailAddress: "user@example.com" },
-  //   fullName: "John Doe",
-  //   imageUrl: "https://..."
-  // }
 
   const { mutate: syncUserMutation, isPending, isSuccess } = useMutation({ mutationFn: syncUser });
   useEffect(() => {
@@ -31,6 +26,20 @@ export default useUserSync;
 
 
 
+export function useUpdatePhone() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: updatePhoneNumber,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+    onError: (error) => {
+      console.error("Phone update error:", error.response?.data);
+      console.error("Status:", error.response?.status);
+    },
+  });
+}
 
 
 

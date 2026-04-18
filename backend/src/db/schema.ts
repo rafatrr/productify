@@ -7,6 +7,7 @@ export const users = pgTable("users", {
     email: text("email").notNull().unique(),
     name: text("name").notNull(),
     imageUrl: text("imag_url"),
+    phoneNumber: text("phone_number"),
     createdAt: timestamp("created_at",{ mode: "date"}).notNull().defaultNow(),
     updatedAt: timestamp("updated_at",{ mode: "date"})
     .notNull().defaultNow().$onUpdate(() => new Date()),

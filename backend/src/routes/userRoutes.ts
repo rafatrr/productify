@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { syncUser } from "../controllers/userController";
+import { syncUser, updatePhoneNumber } from "../controllers/userController";
 import { requireAuth } from "@clerk/express";
 
 const router = Router();
@@ -9,7 +9,8 @@ const router = Router();
 router.post('/sync', requireAuth(),syncUser)
 
 
-
+// /api/users/phone
+router.put('/phone', requireAuth(), updatePhoneNumber);
  
   
 
