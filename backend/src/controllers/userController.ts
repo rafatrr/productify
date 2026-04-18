@@ -27,3 +27,22 @@ export async function syncUser(req:Request,res:Response){
         res.status(500).json({error:'failed to sync user'});
     }
 }
+
+// Update phone number (protected)
+export async function updatePhoneNumber(req: Request, res: Response) {
+  try {
+    const { userId } = getAuth(req);
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const { phoneNumber } = req.body;
+
+    const user = await queries.updateUser(userId, { phoneNumber });
+    res.status(200).json(user);
+
+  } catch (error) {
+    console.error("error updating phone number", error);
+    res.status(500).json({ error: "failed to update phone number" });
+  }
+}
