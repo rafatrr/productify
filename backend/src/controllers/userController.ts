@@ -5,6 +5,8 @@ import { getAuth } from "@clerk/express";
 
 // Sync user (protected)
 export async function syncUser(req:Request,res:Response){
+
+   const { phoneNumber } = req.body;
     try {
         const {userId} = getAuth(req)
         if(!userId){
@@ -27,6 +29,8 @@ export async function syncUser(req:Request,res:Response){
         res.status(500).json({error:'failed to sync user'});
     }
 }
+
+
 
 // Update phone number (protected)
 export async function updatePhoneNumber(req: Request, res: Response) {

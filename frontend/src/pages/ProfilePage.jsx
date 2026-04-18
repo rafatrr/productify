@@ -77,34 +77,6 @@ const [localPhone, setLocalPhone] = useState('');
               <p className="text-base-content/60 text-sm">{user?.primaryEmailAddress?.emailAddress}</p>
             </div>
           </div>
-
-          {/* Phone Number */}
-          {/* <div className="mt-4">
-            <label className="label">
-              <PhoneIcon className="size-4 text-base-content/50" />
-              <span className="label-text font-medium ml-2">WhatsApp Number</span>
-            </label>
-            <div className="flex gap-2">
-              <input
-                type="tel"
-                placeholder="e.g. 966501234567"
-                className="input input-bordered flex-1"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-              />
-              <button
-                className="btn btn-primary"
-                onClick={handlePhoneSubmit}
-                disabled={updatePhone.isPending || !phoneNumber}
-              >
-                {updatePhone.isPending ? <span className="loading loading-spinner" /> : <SaveIcon className="size-4" />}
-              </button>
-            </div>
-            {updatePhone.isSuccess && (
-              <p className="text-success text-sm mt-1">Phone number saved! ✓</p>
-            )}
-          </div> */}
-          {/* Phone Number */}
 <div className="mt-4">
   <label className="label">
     <PhoneIcon className="size-4 text-base-content/50" />
@@ -130,13 +102,23 @@ const [localPhone, setLocalPhone] = useState('');
       placeholder="501234567"
       className="input input-bordered flex-1"
       value={localPhone}
-      onChange={(e) => setLocalPhone(e.target.value)}
+      onChange={(e) => {
+      const value = e.target.value.replace(/\D/g, "");
+       setLocalPhone(value);
+       }}
     />
-
+    
     {/* Save Button */}
-    <button
+      <button
       className="btn btn-primary"
-      onClick={() => updatePhone.mutate(selectedCountry.code + localPhone)}
+      onClick={() => {
+        const digits = (selectedCountry.code + localPhone).replace(/\D/g, "");
+        if (digits.length < 7 || localPhone.length > 10) {
+          alert("Please enter a valid phone number");
+          return;
+        }
+        updatePhone.mutate(digits);
+      }}
       disabled={updatePhone.isPending || !localPhone}
     >
       {updatePhone.isPending ? <span className="loading loading-spinner" /> : <SaveIcon className="size-4" />}
