@@ -1,10 +1,19 @@
-import { Link } from "react-router";
+import { Link, Navigate } from "react-router";
 import { MessageCircleIcon } from "lucide-react";
-
+import { useAuth } from "@clerk/clerk-react";
 const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
 const ProductCard = ({ product }) => {
   const isNew = new Date(product.createdAt) > oneWeekAgo;
+
+  const handelClick = (e) => {
+    e.preventDefault();
+    if(isSignedIn){
+      Navigate(`/product/${product.id}`);
+    }else{
+      Navigate("/sign-in");
+    }
+  }
 
   return (
     <Link
