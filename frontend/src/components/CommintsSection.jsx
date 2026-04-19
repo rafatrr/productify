@@ -25,7 +25,7 @@ const CommintsSection = ({ productId, comments=[], currentUserId }) => {
     <div className="space-y-4">
       <div className="flex items-center gap-2">
         <MessageSquareIcon className="size-5 text-primary" />
-        <h3 className=" font-semibold">Comments</h3>
+        <h3 className=" font-semibold text-lg">Comments</h3>
         <span className="badge badge-neutral badge-sm">{comments.length}</span>
       </div>
 
