@@ -5,7 +5,7 @@ import { useUpdatePhone } from "../hooks/useUserSync";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useUser } from "@clerk/clerk-react";
 import { PlusIcon, PackageIcon, EyeIcon, EditIcon, Trash2Icon, PhoneIcon, SaveIcon } from "lucide-react";
-
+import { useLanguage } from "../context/LanguageContext";
 
  const countries = [
   { name: "Saudi Arabia", code: "966", flag: "🇸🇦" },
@@ -29,16 +29,14 @@ import { PlusIcon, PackageIcon, EyeIcon, EditIcon, Trash2Icon, PhoneIcon, SaveIc
   { name: "France", code: "33", flag: "🇫🇷" },
 ];
 
-
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const { data: products = [], isLoading, isError } = useMyProducts();
   const deleteProduct = useDeleteProduct();
   const updatePhone = useUpdatePhone();
+  const { language,toggleLanguage,t } = useLanguage();
   const [phoneNumber, setPhoneNumber] = useState('');
-
- 
 const [selectedCountry, setSelectedCountry] = useState(countries[0]);
 const [localPhone, setLocalPhone] = useState('');
 
@@ -59,11 +57,11 @@ const [localPhone, setLocalPhone] = useState('');
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">My Products</h1>
-          <p className="text-base-content/60 text-sm">Manage your listings</p>
+          <h1 className="text-2xl font-bold">{t("myProducts")}</h1>
+          <p className="text-base-content/60 text-sm">{t("manageListings")}</p>
         </div>
         <Link to="/create" className="btn btn-primary btn-sm gap-1">
-          <PlusIcon className="size-4" /> New
+          <PlusIcon className="size-4" /> {t("newProduct")}
         </Link>
       </div>
 
@@ -77,10 +75,14 @@ const [localPhone, setLocalPhone] = useState('');
               <p className="text-base-content/60 text-sm">{user?.primaryEmailAddress?.emailAddress}</p>
             </div>
           </div>
+          <button className="btn btn-outline btn-sm ml-auto" onClick={toggleLanguage}>
+            {language === "en" ? "🇸🇦 العربية" : "🇬🇧 English"}
+          </button>
+          
 <div className="mt-4">
   <label className="label">
     <PhoneIcon className="size-4 text-base-content/50" />
-    <span className="label-text font-medium ml-2">WhatsApp Number</span>
+    <span className="label-text font-medium ml-2"> {t("whatsappNumber")}</span>
   </label>
   <div className="flex gap-2">
     {/* Country Selector */}
@@ -99,7 +101,7 @@ const [localPhone, setLocalPhone] = useState('');
     {/* Phone Input */}
     <input
       type="tel"
-      placeholder="501234567"
+      placeholder={t("phonePlaceholder")}
       className="input input-bordered flex-1"
       value={localPhone}
       onChange={(e) => {
@@ -114,7 +116,7 @@ const [localPhone, setLocalPhone] = useState('');
       onClick={() => {
         const digits = (selectedCountry.code + localPhone).replace(/\D/g, "");
         if (digits.length < 7 || localPhone.length > 10) {
-          alert("Please enter a valid phone number");
+          alert(t("pleaseEnterValidPhone"));
           return;
         }
         updatePhone.mutate(digits);
@@ -125,7 +127,7 @@ const [localPhone, setLocalPhone] = useState('');
     </button>
   </div>
   {updatePhone.isSuccess && (
-    <p className="text-success text-sm mt-1">Phone number saved! ✓</p>
+    <p className="text-success text-sm mt-1">{t("phoneSaved")}</p>
   )}
 </div>
         </div>
@@ -134,7 +136,7 @@ const [localPhone, setLocalPhone] = useState('');
       {/* Stats */}
       <div className="stats bg-base-300 w-full">
         <div className="stat">
-          <div className="stat-title">Total Products</div>
+          <div className="stat-title">{t("totalProducts")}</div>
           <div className="stat-value text-primary">{products?.length || 0}</div>
         </div>
       </div>
@@ -144,10 +146,10 @@ const [localPhone, setLocalPhone] = useState('');
         <div className="card bg-base-300">
           <div className="card-body items-center text-center py-16">
             <PackageIcon className="size-16 text-base-content/20" />
-            <h3 className="card-title text-base-content/50">No products yet</h3>
-            <p className="text-base-content/40 text-sm">Start by creating your first product</p>
+            <h3 className="card-title text-base-content/50">{t("noProductsYet")}</h3>
+            <p className="text-base-content/40 text-sm">{t("startCreatingProduct")}</p>
             <Link to="/create" className="btn btn-primary btn-sm mt-4">
-              Create Product
+              {t("createProduct")}
             </Link>
           </div>
         </div>
@@ -166,20 +168,20 @@ const [localPhone, setLocalPhone] = useState('');
                     onClick={() => navigate(`/product/${product.id}`)}
                     className="btn btn-ghost btn-xs gap-1"
                   >
-                    <EyeIcon className="size-3" /> View
+                    <EyeIcon className="size-3" /> {t("view")}
                   </button>
                   <button
                     onClick={() => navigate(`/edit/${product.id}`)}
                     className="btn btn-ghost btn-xs gap-1"
                   >
-                    <EditIcon className="size-3" /> Edit
+                    <EditIcon className="size-3" /> {t("edit")}
                   </button>
                   <button
                     onClick={() => handleDelete(product.id)}
                     className="btn btn-ghost btn-xs text-error gap-1"
                     disabled={deleteProduct.isPending}
                   >
-                    <Trash2Icon className="size-3" /> Delete
+                    <Trash2Icon className="size-3" /> {t("delete")}
                   </button>
                 </div>
               </div>

@@ -1,11 +1,14 @@
 import { Link, useNavigate  } from "react-router";
 import { MessageCircleIcon } from "lucide-react";
-import { useAuth } from "@clerk/clerk-react";
+import { useAuth, useClerk } from "@clerk/clerk-react";
+import { useLanguage } from "../context/LanguageContext";
 const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
 const ProductCard = ({ product }) => {
+  const { t } = useLanguage();
   const isNew = new Date(product.createdAt) > oneWeekAgo;
-  const { isSignedIn } = useAuth();        // ← ناقصة
+  const { isSignedIn  } = useAuth();
+  const { redirectToSignIn } = useClerk(); 
   const navigate = useNavigate(); 
 
   const handelClick = (e) => {
@@ -13,7 +16,7 @@ const ProductCard = ({ product }) => {
     if(isSignedIn){
       navigate(`/product/${product.id}`);
     }else{
-      navigate(openSignIn());
+     redirectToSignIn();
     }
   }
 

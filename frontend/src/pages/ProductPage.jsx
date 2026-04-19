@@ -4,12 +4,13 @@ import CommintsSection from '../components/CommintsSection';
 import { useAuth } from '@clerk/clerk-react';
 import {useParams, Link, useNavigate } from 'react-router'
 import { useDeleteProduct, useProduct } from '../hooks/useProducts';
+import { useLanguage } from "../context/LanguageContext";
 
 const ProductPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { userId } = useAuth();
-
+ const { language, toggleLanguage, t } = useLanguage();
   const { data: product, isLoading, error } = useProduct(id);
   const deleteProduct = useDeleteProduct(id)
   const handelDelete = () =>{
@@ -17,7 +18,6 @@ const ProductPage = () => {
       deleteProduct.mutate(id, { onSuccess: () => navigate('/') });
     }
   }
-
   if (isLoading) return <LoadingSpinner />;
 
    if (error || !product) {
@@ -36,13 +36,16 @@ const ProductPage = () => {
       <div className="flex items-center justify-between">
         <Link to='/' className='btn btn-ghost btn-sm gap-1' >
           <ArrowLeft className="size-4" />
-          Back
+          {t('back')}
         </Link>
               {isOwner && (
           <div className="flex gap-2">
             <Link to={`/edit/${product.id}`} className="btn btn-ghost btn-sm gap-1">
-              <EditIcon className="size-4" /> Edit
+              <EditIcon className="size-4" /> {t("edit")}
             </Link>
+            <button className="btn btn-outline btn-sm gap-2" onClick={toggleLanguage}>
+              {language === "en" ? "🇸🇦 العربية" : "🇬🇧 English"}
+            </button>
             <button
               onClick={handelDelete}
               className="btn btn-error btn-sm gap-1"
@@ -53,7 +56,7 @@ const ProductPage = () => {
               ) : (
                 <Trash2Icon className="size-4" />
               )}
-              Delete
+                {t("Delete")}
             </button>
           </div>
         )}
@@ -108,7 +111,7 @@ const ProductPage = () => {
                         rel="noopener noreferrer"
                         className="btn bg-green-500 text-white w-48 gap-2 mt-2"
                       >
-                       Contact on WhatsApp
+                       {t("ContactOnWhatsApp")}
                       </a>
                     )}            
                 </div>

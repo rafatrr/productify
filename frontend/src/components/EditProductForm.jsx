@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { ArrowLeft, ImageIcon, TypeIcon, FileTextIcon, SaveIcon } from 'lucide-react';
 import { Link } from 'react-router';
 import { uploadImage } from '../lib/api';
+import { useLanguage } from '../context/LanguageContext';
 
 const EditProductForm = ({ isPending, product, onSubmit, isError }) => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     title: product.title,
     desc: product.desc,
@@ -38,15 +40,15 @@ const EditProductForm = ({ isPending, product, onSubmit, isError }) => {
     <div className="max-w-xl mx-auto p-6">
       <Link to="/profile" className="btn btn-ghost mb-6">
         <ArrowLeft className="w-4 h-4 mr-2" />
-        Back
+        {t('back')}
       </Link>
-      <h1 className="text-3xl font-bold mb-8">Edit Product</h1>
+      <h1 className="text-3xl font-bold mb-8">{t.editProduct}</h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
 
         <label className="label">
           <TypeIcon className="size-4 text-base-content/50" />
-          <span className="label-text font-medium">Title</span>
+          <span className="label-text font-medium"> {t('title')}</span>
         </label>
         <input
           type="text"
@@ -58,7 +60,7 @@ const EditProductForm = ({ isPending, product, onSubmit, isError }) => {
 
         <label className="label">
           <FileTextIcon className="size-4 text-base-content/50" />
-          <span className="label-text font-medium">Description</span>
+          <span className="label-text font-medium">{t('description')}</span>
         </label>
         <textarea
           value={formData.desc}
@@ -69,14 +71,14 @@ const EditProductForm = ({ isPending, product, onSubmit, isError }) => {
 
         <label className="label">
           <ImageIcon className="size-4 text-base-content/50" />
-          <span className="label-text font-medium">Image</span>
+          <span className="label-text font-medium">{t('image')}</span>
         </label>
 
         {/* Image Upload */}
         <label className="flex items-center gap-2 p-3 rounded-box bg-base-200 border border-base-300 cursor-pointer w-full">
           <ImageIcon className='size-4 text-base-content/50' />
           <span className="text-base-content/50 text-sm">
-            {imageFile ? imageFile.name : 'Choose a new image...'}
+            {imageFile ? imageFile.name : t('chooseImage')}
           </span>
           <input
             type="file"
@@ -104,7 +106,7 @@ const EditProductForm = ({ isPending, product, onSubmit, isError }) => {
         )}
 
         <button type="submit" className="btn btn-primary w-full" disabled={isPending}>
-          {isPending ? <span className="loading loading-spinner" /> : "Save Changes"}
+          {isPending ? <span className="loading loading-spinner" /> : t('saveChanges')}
         </button>
 
       </form>

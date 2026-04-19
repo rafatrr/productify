@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth, SignInButton } from "@clerk/clerk-react";
 import { useCreateComment, useDeleteComment } from "../hooks/useComments";
 import { SendIcon, Trash2Icon, LogInIcon, MessageSquare, MessageSquareIcon, Trash2 } from "lucide-react";
-
+import { useLanguage } from "../context/LanguageContext";
 
 
 
@@ -11,6 +11,7 @@ const CommintsSection = ({ productId, comments=[], currentUserId }) => {
   const [content, setContent] = useState("");
   const createComment = useCreateComment();
   const deleteComment = useDeleteComment(productId);
+  const { t } = useLanguage();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,7 +26,7 @@ const CommintsSection = ({ productId, comments=[], currentUserId }) => {
     <div className="space-y-4">
       <div className="flex items-center gap-2">
         <MessageSquareIcon className="size-5 text-primary" />
-        <h3 className=" font-semibold">Comments</h3>
+        <h3 className=" font-semibold">{t("Comments")}</h3>
         <span className="badge badge-neutral badge-sm">{comments.length}</span>
       </div>
 
@@ -33,7 +34,7 @@ const CommintsSection = ({ productId, comments=[], currentUserId }) => {
         <form onSubmit={handleSubmit} className="flex gap-2">
           <input
             type="text"
-            placeholder="Add a comment..."
+            placeholder={t("Addacomment")}
             className="input input-bordered input-sm flex-1 bg-base-200"
             value={content}
             onChange={(e) => setContent(e.target.value)}

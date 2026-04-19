@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEffect, useState  } from 'react';
 import { PaletteIcon } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 const THEMES = [  
   'light',
   'dark',
@@ -11,6 +12,7 @@ const THEMES = [
 
 
 const ThemeSelector = () => {
+  const { t } = useLanguage();
   const [theme, setTheme] = useState(()=>{
     if(typeof window !== 'undefined') {
       return localStorage.getItem('theme') || 'light';
@@ -28,7 +30,7 @@ const ThemeSelector = () => {
       <div className="btn btn-ghost btn-sm gap-1  " tabIndex={0} role='button'>
 
          <PaletteIcon /> 
-         <span className='hidden sm:inline'>Theme </span> 
+         <span className='hidden sm:inline'>{t('theme')}</span> 
       </div>
       <ul   tabIndex={0}
         className="dropdown-content menu bg-base-200 rounded-box z-50 w-56 p-2 shadow-xl max-h-30 overflow-y-auto flex-nowrap mt-40 ">

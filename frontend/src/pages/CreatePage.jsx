@@ -3,10 +3,12 @@ import { Link, useNavigate } from 'react-router';
 import { useCreateProduct } from '../hooks/useProducts';
 import { ArrowLeft, FileTextIcon, Image, SparklesIcon, TypeIcon } from 'lucide-react';
 import { uploadImage } from '../lib/api';
+import { useLanguage } from '../context/LanguageContext';
 
 const CreatePage = () => {
   const navigate = useNavigate();
   const createProduct = useCreateProduct();
+  const { t } = useLanguage();
   
   const [formData, setFormData] = React.useState({
     title: '',
@@ -41,14 +43,14 @@ const CreatePage = () => {
   return (
     <div className='max-w-lg mx-auto'>
       <Link to="/" className="btn btn-ghost btn-sm gap-1 mb-4">
-        <ArrowLeft className='size-4'/>Back
+        <ArrowLeft className='size-4'/>{t('back')}
       </Link>
 
       <div className="card bg-base-300">
         <div className="card-body">
           <h1 className='card-title'>
             <SparklesIcon className='size-5 text-primary'/>
-            Create Product
+            {t('createProduct')}
           </h1>
           <form onSubmit={handelSubmit} className="flex flex-col gap-4 place-items-start">
             
@@ -57,7 +59,7 @@ const CreatePage = () => {
               <TypeIcon className='size-4 bg-base-content/50' />
               <input
                 type="text"
-                placeholder="Title"
+                placeholder={t('title')}
                 className="grow"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
@@ -69,7 +71,7 @@ const CreatePage = () => {
             <label className="flex items-center gap-2 p-3 rounded-box bg-base-200 border border-base-300 cursor-pointer w-full">
               <Image className='size-4 text-base-content/50' />
               <span className="text-base-content/50 text-sm">
-                {formData.imageFile ? formData.imageFile.name : 'Choose an image...'}
+                {formData.imageFile ? formData.imageFile.name : t('chooseImage')}
               </span>
               <input
                 type="file"
@@ -95,7 +97,7 @@ const CreatePage = () => {
               <div className="flex items-start gap-2 p-3 rounded-box bg-base-200 border border-base-300">
                 <FileTextIcon className="size-4 text-base-content/50 mt-1" />
                 <textarea
-                  placeholder="Description"
+                  placeholder={t('description')}
                   className="grow bg-transparent resize-none focus:outline-none min-h-24"
                   value={formData.desc}
                   onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
@@ -114,7 +116,7 @@ const CreatePage = () => {
               className='btn btn-primary w-full'
               disabled={createProduct.isPending}
             >
-              {createProduct.isPending ? (<span className='loading loading-spinner'/>) : ("Create product")}
+              {createProduct.isPending ? (<span className='loading loading-spinner'/>) : ( t('createProduct') )}
             </button>
           </form>
         </div>
