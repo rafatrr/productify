@@ -19,6 +19,7 @@ const ProductCard = ({ product }) => {
     <Link
       to={`/product/${product.id}`}
       className="card bg-base-300 hover:bg-base-200 transition-colors"
+      onClick={handelClick}
     >
       <figure className="px-4 pt-4">
         <img
