@@ -8,7 +8,23 @@ import commentsRoutes from "./routes/commentsRoutes";
 import uploadRouter from "./routes/upload.routes";
 const app = express();
 
-app.use(cors({origin: ENV.FRONTEND_URL, credentials: true}));
+// app.use(cors({origin: ENV.FRONTEND_URL, credentials: true}));
+
+app.use(cors({
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      "https://productify-coral.vercel.app",
+      "https://productify-byay3ax5x-rafat1.vercel.app",
+      "http://localhost:5173"
+    ];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
 //'credentials: true' allows the frontend to send cookies to the backend so thatt we can authenticate the user
 app.use(clerkMiddleware());// auth obj will by attached to the req 
 app.use(express.json()); // parses json request bodies
