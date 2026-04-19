@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
     if(isSignedIn){
       navigate(`/product/${product.id}`);
     }else{
-      navigate("/sign-in");
+      navigate(openSignIn());
     }
   }
 
