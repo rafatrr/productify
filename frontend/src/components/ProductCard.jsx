@@ -5,13 +5,15 @@ const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
 const ProductCard = ({ product }) => {
   const isNew = new Date(product.createdAt) > oneWeekAgo;
+  const { isSignedIn } = useAuth();        // ← ناقصة
+  const navigate = useNavigate(); 
 
   const handelClick = (e) => {
     e.preventDefault();
     if(isSignedIn){
-      Navigate(`/product/${product.id}`);
+      navigate(`/product/${product.id}`);
     }else{
-      Navigate("/sign-in");
+      navigate("/sign-in");
     }
   }
 
