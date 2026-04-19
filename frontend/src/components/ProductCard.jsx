@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router";
+import { Link, useNavigate  } from "react-router";
 import { MessageCircleIcon } from "lucide-react";
 import { useAuth } from "@clerk/clerk-react";
 const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
